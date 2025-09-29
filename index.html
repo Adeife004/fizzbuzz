@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FizzBuzz Checker</title>
+</head>
+<body>
+  <h1>FizzBuzz Program</h1>
+  
+  <input type="number" id="numInput" placeholder="Enter a number">
+  <button onclick="checkFizzBuzz()">Check</button>
+  
+  <div id="result"></div>
+
+  <script>
+    function checkFizzBuzz() {
+      const input = document.getElementById("numInput").value;
+      const number = parseInt(input);
+      const result = document.getElementById("result");
+
+      if (isNaN(number)) {
+        result.textContent = "Please enter a valid number";
+        return;
+      }
+
+      if (number % 3 === 0 && number % 5 === 0) {
+        result.textContent = `${number} is FizzBuzz`;
+      } else if (number % 3 === 0) {
+        result.textContent = `${number} is Fizz`;
+      } else if (number % 5 === 0) {
+        result.textContent = `${number} is Buzz`;
+      } else {
+        result.textContent = `${number} is not divisible by 3 or 5`;
+      }
+    }
+  </script>
+</body>
+</html>
