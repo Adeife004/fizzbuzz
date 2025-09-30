@@ -6,34 +6,194 @@
   <title>FizzBuzz Checker</title>
 </head>
 <body>
-  <h1>FizzBuzz Program</h1>
-  
-  <input type="number" id="numInput" placeholder="Enter a number">
-  <button onclick="checkFizzBuzz()">Check</button>
-  
-  <div id="result"></div>
+  <div class="container">
+    <h1>FizzBuzz Program</h1>
+    
+    <div class="input-group">
+      <input type="number" id="numInput" placeholder="Enter a number">
+      <button id="checkBtn">Check</button>
+    </div>
+    
+    <div id="result"></div>
+  </div>
 
   <script>
-    function checkFizzBuzz() {
-      const input = document.getElementById("numInput").value;
-      const number = parseInt(input);
-      const result = document.getElementById("result");
+    // Apply styles dynamically
+    const styles = `
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-      if (isNaN(number)) {
-        result.textContent = "Please enter a valid number";
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-weight: 600;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 25px;
+      }
+
+      input[type="number"] {
+        flex: 1;
+        padding: 15px 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        outline: none;
+      }
+
+      input[type="number"]:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      #result {
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      #result.show {
+        background: #f8f9fa;
+        border: 2px solid #e0e0e0;
+      }
+
+      #result.fizzbuzz {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border: none;
+      }
+
+      #result.fizz {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border: none;
+      }
+
+      #result.buzz {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        color: white;
+        border: none;
+      }
+
+      #result.error {
+        background: #fff3cd;
+        color: #856404;
+        border: 2px solid #ffeaa7;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 30px 20px;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        .input-group {
+          flex-direction: column;
+        }
+      }
+    `;
+
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = styles;
+    document.head.appendChild(styleSheet);
+
+    // FizzBuzz logic
+    const numInput = document.getElementById('numInput');
+    const checkBtn = document.getElementById('checkBtn');
+    const result = document.getElementById('result');
+
+    function checkFizzBuzz() {
+      const input = numInput.value;
+      const number = parseInt(input);
+
+      result.className = '';
+
+      if (isNaN(number) || input === '') {
+        result.textContent = 'Please enter a valid number';
+        result.classList.add('show', 'error');
         return;
       }
 
       if (number % 3 === 0 && number % 5 === 0) {
-        result.textContent = `${number} is FizzBuzz`;
+        result.textContent = `${number} is FizzBuzz! 🎉`;
+        result.classList.add('show', 'fizzbuzz');
       } else if (number % 3 === 0) {
-        result.textContent = `${number} is Fizz`;
+        result.textContent = `${number} is Fizz! ✨`;
+        result.classList.add('show', 'fizz');
       } else if (number % 5 === 0) {
-        result.textContent = `${number} is Buzz`;
+        result.textContent = `${number} is Buzz! ⚡`;
+        result.classList.add('show', 'buzz');
       } else {
         result.textContent = `${number} is not divisible by 3 or 5`;
+        result.classList.add('show');
       }
     }
+
+    checkBtn.addEventListener('click', checkFizzBuzz);
+    
+    numInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        checkFizzBuzz();
+      }
+    });
   </script>
 </body>
 </html>
